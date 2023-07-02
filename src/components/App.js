@@ -7,20 +7,21 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import InfoTooltip from "./InfoTooltip";
-import Signup from "./Signup";
+import ProtectedRoute from "./ProtectedRoute";
+import Login from "./Login";
+import Register from "./Register";
 
 import {useEffect, useState} from 'react';
 import {api} from "../utils/api";
 import {auth} from "../utils/auth";
 
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
-import { AppContext } from '../contexts/AppContext.js';
-import { AuthContext } from '../contexts/AuthContext.js';
+import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
+import {AppContext} from '../contexts/AppContext.js';
+import {AuthContext} from '../contexts/AuthContext.js';
 
 import {
     Route,
     Routes,
-    Navigate,
     useNavigate,
 } from "react-router-dom";
 
@@ -74,12 +75,15 @@ function App() {
     function handleEditAvatarClick() {
         setEditAvatarPopup(true)
     }
+
     function handleEditProfileClick() {
         setEditProfilePopup(true)
     }
+
     function handleAddPlaceClick() {
         setAddPlacePopup(true)
     }
+
     function closeAllPopups() {
         setEditProfilePopup(false);
         setAddPlacePopup(false);
@@ -89,10 +93,12 @@ function App() {
         setInfoTooltipPopupOpen(false);
         setSelectedCard({});
     }
+
     function handleCardClick(card) {
         setIsImagePopupOpen(true);
         setSelectedCard(card)
     }
+
     function openInfoTooltipPopupOpen(successStatus) {
         setInfoTooltipPopupOpen(true);
         setInfoTooltipPopupStatusSuccess(successStatus);
@@ -108,18 +114,18 @@ function App() {
 
     function handleCardLike(card) {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
+
         function makeRequest() {
             return api.changeCardLikeStatus(card._id, isLiked)
                 .then(newCard => {
                     const cardsCopy = [...cards];
                     setCards(cardsCopy.map(c => c._id === card._id ? newCard : c))
                 })
-                .catch((err) => {
-                    console.log(err);
-                });
         }
+
         handleSubmit(makeRequest);
     }
+
     function handleCardDelete(card) {
         function makeRequest() {
             return api.deleteCard(card._id)
@@ -127,31 +133,39 @@ function App() {
                     setCards(state => state.filter(item => item._id !== card._id))
                 })
         }
+
         handleSubmit(makeRequest);
     }
+
     function handleUpdateUser(profile) {
         function makeRequest() {
             return api.editProfile(profile)
                 .then(setCurrentUser)
         }
+
         handleSubmit(makeRequest);
     }
+
     function handleUpdateAvatar(link) {
         function makeRequest() {
             return api.editAvatar(link)
-            .then(setCurrentUser)
+                .then(setCurrentUser)
         }
+
         handleSubmit(makeRequest);
     }
+
     function handleAddPlace(card) {
         function makeRequest() {
             return api.addCard(card)
-            .then(newCard => {
-                setCards([newCard, ...cards]);
-            })
+                .then(newCard => {
+                    setCards([newCard, ...cards]);
+                })
         }
+
         handleSubmit(makeRequest);
     }
+
     function onSignup(user) {
         auth.signup(user)
             .then(() => {
@@ -163,6 +177,7 @@ function App() {
                 console.log(err);
             });
     }
+
     function onLogin(user) {
         auth.signin(user)
             .then((result) => {
@@ -176,6 +191,7 @@ function App() {
                 console.log(err);
             });
     }
+
     function onSignout(user) {
         localStorage.removeItem('token');
         setLoggedIn(false);
@@ -185,69 +201,68 @@ function App() {
     return (
         <div className="page">
             <AuthContext.Provider value={isLoggedIn}>
-            <AppContext.Provider value={isLoading}>
-            <CurrentUserContext.Provider value={currentUser}>
-                <Header signOut={onSignout} email={email}/>
+                <AppContext.Provider value={isLoading}>
+                    <CurrentUserContext.Provider value={currentUser}>
+                        <Header signOut={onSignout} email={email}/>
 
-                <Routes>
-                    <Route path="/" element={
-                        isLoggedIn
-                        ? <Main
-                            cards={cards}
-                            onEditProfile={handleEditProfileClick}
-                            onAddPlace={handleAddPlaceClick}
-                            onEditAvatar={handleEditAvatarClick}
-                            onCardClick={handleCardClick}
-                            onCardLike={handleCardLike}
-                            onCardDelete={handleCardDelete}
+                        <Routes>
+                            <Route path="/" element={
+                                <ProtectedRoute
+                                    isLoggedIn={isLoggedIn}
+                                    cards={cards}
+                                    onEditProfile={handleEditProfileClick}
+                                    onAddPlace={handleAddPlaceClick}
+                                    onEditAvatar={handleEditAvatarClick}
+                                    onCardClick={handleCardClick}
+                                    onCardLike={handleCardLike}
+                                    onCardDelete={handleCardDelete}
+                                />
+                            }
+                            />
+                            <Route path="signin" element={<Login isSignup={false} onSubmit={onLogin}/>}/>
+                            <Route path="signup" element={<Register isSignup={true} onSubmit={onSignup}/>}/>
+                        </Routes>
+
+                        <Footer/>
+
+                        <EditProfilePopup
+                            isOpen={isEditProfilePopupOpen}
+                            onClose={closeAllPopups}
+                            onUpdateUser={handleUpdateUser}
                         />
-                        : <Navigate to="/signin" />
-                    }
-                    />
-                    <Route path="signin" element={<Signup isSignup={false} onSubmit={onLogin}/>} />
-                    <Route path="signup" element={<Signup isSignup={true} onSubmit={onSignup}/>} />
-                </Routes>
 
-                <Footer/>
+                        <EditAvatarPopup
+                            isOpen={isEditAvatarPopupOpen}
+                            onClose={closeAllPopups}
+                            onUpdateAvatar={handleUpdateAvatar}
+                        />
 
-                <EditProfilePopup
-                    isOpen={isEditProfilePopupOpen}
-                    onClose={closeAllPopups}
-                    onUpdateUser={handleUpdateUser}
-                />
+                        <AddPlacePopup
+                            isOpen={isAddPlacePopupOpen}
+                            onClose={closeAllPopups}
+                            onAddPlace={handleAddPlace}
+                        />
 
-                <EditAvatarPopup
-                    isOpen={isEditAvatarPopupOpen}
-                    onClose={closeAllPopups}
-                    onUpdateAvatar={handleUpdateAvatar}
-                />
+                        <PopupWithButton
+                            title={'Вы уверены?'}
+                            name={'cardDelete'}
+                            isOpen={isDeleteCardPopupOpen}
+                            onClose={closeAllPopups}
+                        />
 
-                <AddPlacePopup
-                    isOpen={isAddPlacePopupOpen}
-                    onClose={closeAllPopups}
-                    onAddPlace={handleAddPlace}
-                />
+                        <ImagePopup
+                            card={selectedCard}
+                            isOpen={isImagePopupOpen}
+                            onClose={closeAllPopups}
+                        />
 
-                <PopupWithButton
-                    title={'Вы уверены?'}
-                    name={'cardDelete'}
-                    isOpen={isDeleteCardPopupOpen}
-                    onClose={closeAllPopups}
-                />
-
-                <ImagePopup
-                    card={selectedCard}
-                    isOpen={isImagePopupOpen}
-                    onClose={closeAllPopups}
-                />
-
-                <InfoTooltip
-                    statusSuccess={infoTooltipPopupStatusSuccess}
-                    isOpen={isInfoTooltipPopupOpen}
-                    onClose={closeAllPopups}
-                />
-            </CurrentUserContext.Provider>
-            </AppContext.Provider>
+                        <InfoTooltip
+                            statusSuccess={infoTooltipPopupStatusSuccess}
+                            isOpen={isInfoTooltipPopupOpen}
+                            onClose={closeAllPopups}
+                        />
+                    </CurrentUserContext.Provider>
+                </AppContext.Provider>
             </AuthContext.Provider>
         </div>
     );

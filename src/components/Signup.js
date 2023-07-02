@@ -1,12 +1,10 @@
 import {useContext, useEffect, useState} from "react";
 import {AppContext} from "../contexts/AppContext";
-import {usePopupClose} from "../hooks/usePopupClose";
 import MenuLink from "./MenuLink";
 
-function Signup({isOpen, onClose, onSubmit, isSignup}) {
+function Signup({onSubmit, isSignup}) {
 
     const isLoading = useContext(AppContext);
-    usePopupClose(isOpen, onClose);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

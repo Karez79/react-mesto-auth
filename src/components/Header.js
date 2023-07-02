@@ -8,6 +8,10 @@ function Header({signOut, email}) {
     function handleBurger() {
         setBurgerActive(!isBurgerActive);
     }
+    function handleSignout() {
+        signOut();
+        setBurgerActive(false);
+    }
 
     return (
         <header className={`header ${isBurgerActive ? 'header_menu' : ''}`}>
@@ -16,7 +20,7 @@ function Header({signOut, email}) {
                     src={logo}
                     className="header__logo" alt="Логотип Место."/>
             </a>
-            <Menu email={email} isBurgerActive={isBurgerActive} setBurgerActive={handleBurger} signOut={signOut}/>
+            <Menu email={email} isBurgerActive={isBurgerActive} setBurgerActive={handleBurger} signOut={handleSignout}/>
         </header>
     );
 }
