@@ -23,6 +23,7 @@ import {
     Route,
     Routes,
     useNavigate,
+    Navigate,
 } from "react-router-dom";
 
 function App() {
@@ -208,6 +209,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={
                                 <ProtectedRoute
+                                    element={Main}
                                     isLoggedIn={isLoggedIn}
                                     cards={cards}
                                     onEditProfile={handleEditProfileClick}
@@ -219,8 +221,10 @@ function App() {
                                 />
                             }
                             />
+                            
                             <Route path="signin" element={<Login isSignup={false} onSubmit={onLogin}/>}/>
                             <Route path="signup" element={<Register isSignup={true} onSubmit={onSignup}/>}/>
+                            <Route path="/*" element={<Navigate to="/signin" replace />} />
                         </Routes>
 
                         <Footer/>

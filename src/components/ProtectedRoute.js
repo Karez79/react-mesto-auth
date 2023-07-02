@@ -1,20 +1,8 @@
-import Main from "./Main";
-import {Navigate} from "react-router-dom";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
-function ProtectedRoute({isLoggedIn, cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete}) {
-    return (
-        isLoggedIn
-            ? <Main
-                cards={cards}
-                onEditProfile={onEditProfile}
-                onAddPlace={onAddPlace}
-                onEditAvatar={onEditAvatar}
-                onCardClick={onCardClick}
-                onCardLike={onCardLike}
-                onCardDelete={onCardDelete}
-            />
-            : <Navigate to="/signin" />
-    );
-}
+const ProtectedRoute = ({ isLoggedIn, element: Component, ...props }) => {
+  return isLoggedIn ? <Component {...props} /> : <Navigate to="/signin" replace />;
+};
 
 export default ProtectedRoute;
