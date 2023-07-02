@@ -1,0 +1,25 @@
+.popup__close-zoombutton {
+    width: 32px;
+    height: 32px;
+    background: url(../../../images/closeIcon.svg) center no-repeat;
+    border: none;
+    position: absolute;
+  top: -40px;
+  right: -40px;
+    transition: opacity 0.3s linear;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__close-zoombutton {
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+        right: -5px;
+        top:-30px;
+    }
+}
+
+.popup__close-zoombutton:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}

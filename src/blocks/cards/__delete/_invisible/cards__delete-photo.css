@@ -1,0 +1,4 @@
+.cards__delete-photo_invisible {
+    pointer-events: none;
+    opacity: 0;
+}

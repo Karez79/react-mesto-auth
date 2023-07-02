@@ -1,0 +1,16 @@
+.popup__title-zoom {
+    order: 1;
+    margin: 0;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FFFFFF;
+    padding-top: 10px;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__title-zoom {
+        font-size: 12px;
+        line-height: 15px;        
+    }
+}

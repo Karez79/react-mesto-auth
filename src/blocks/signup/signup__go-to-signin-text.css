@@ -1,0 +1,14 @@
+.signup__go-to-signin-text {
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #fff;
+}
+
+.signup__go-to-signin-text--link {
+    text-decoration: none;
+}
+.signup__go-to-signin-text--link:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}

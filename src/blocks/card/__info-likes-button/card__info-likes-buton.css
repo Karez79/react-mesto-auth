@@ -1,0 +1,11 @@
+.card__info-likes-button {
+    background: url(../../../images/heart.svg) center no-repeat;
+    height: 19px;
+    border: none;
+    width: 23px;
+}
+
+.card__info-likes-button:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}

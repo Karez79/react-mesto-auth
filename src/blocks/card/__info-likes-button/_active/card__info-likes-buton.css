@@ -1,0 +1,11 @@
+.card__info-likes-button_active {
+    background: url(../../../../images/Union.svg) center no-repeat;
+    height: 19px;
+    border: none;
+    width: 23px;
+}
+
+.card__info-likes-button_active:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}

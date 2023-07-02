@@ -1,0 +1,7 @@
+.popup_opened {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+    transition: 0.5s linear;
+}

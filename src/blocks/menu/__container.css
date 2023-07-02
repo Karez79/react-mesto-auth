@@ -1,0 +1,24 @@
+.menu__container {
+    display: none;
+}
+
+.menu__container_active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 18px;
+    padding: 40px 0;
+    width: 100%;
+    border-bottom: 1px solid #545454;
+}
+
+@media screen and (min-width: 768px) {
+    .menu__container {
+        position: static;
+        display: flex;
+        column-gap: 24px;
+    }
+}

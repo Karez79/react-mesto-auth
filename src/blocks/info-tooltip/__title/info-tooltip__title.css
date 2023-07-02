@@ -1,0 +1,13 @@
+.info-tooltip__title {
+    display: block;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 900;
+    white-space: break-spaces;
+}
+
+@media (min-width: 768px) {
+    .info-tooltip__title {
+        font-size: 20px;
+    }
+}

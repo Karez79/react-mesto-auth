@@ -1,0 +1,15 @@
+.popup__container-zoom {
+    max-width: 75vw;
+    max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+
+@media all and (width <=700px) {
+    .popup__container-zoom {
+        width: 75vw;
+        max-height: 75vh;
+    }
+}

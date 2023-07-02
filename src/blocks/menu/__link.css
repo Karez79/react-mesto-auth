@@ -1,0 +1,19 @@
+.menu__link {
+    border: none;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 400;
+}
+
+.menu__link:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.menu__link_pale {
+    color: #A9A9A9;
+}

@@ -1,0 +1,30 @@
+.menu__burger-button {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    margin: 0;
+    padding: 0;
+    min-width: 20px;
+    min-height: 20px;
+    background-color: transparent;
+    border: none;
+    transition: 0.2s;
+}
+
+.menu__burger-button_active {
+    background-image: url(../../images/closeIcon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.menu__burger-button_active .menu__burger-button-inner {
+    transition: 0.2s;
+    opacity: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .menu__burger-button {
+        display: none;
+    }
+}

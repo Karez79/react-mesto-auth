@@ -1,0 +1,22 @@
+.signup__button {
+    display: block;
+    margin-bottom: 20px;
+    padding: 14px 0;
+    width: 100%;
+    border: none;
+    background-color: #fff;
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.signup__button:hover {
+    cursor: pointer;
+    opacity: 0.85;
+}
+
+@media (min-width: 768px) {
+    .signup__button {
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+}
